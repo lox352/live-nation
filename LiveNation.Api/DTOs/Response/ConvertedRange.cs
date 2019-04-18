@@ -8,14 +8,6 @@ namespace LiveNation.Api.DTOs.Response
     public class ConvertedRange
     {
         public string Result { get; set; }
-        public ResultSummary ResultSummary { get; set; }
-    }
-
-    public class ResultSummary
-    {
-        public int Live { get; set; }
-        public int Nation { get; set; }
-        public int LiveNation { get; set; }
-        public int Integer { get; set; }
+        public Dictionary<string, int> ResultSummary { get; set; }
     }
 }
