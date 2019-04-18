@@ -13,9 +13,11 @@ namespace LiveNation.Api.DTOs.Request
     {
         public int Start { get; set; }
         public int End { get; set; }
+        public int Length  => End - Start;
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Start < End)
+            if (Start > End)
             {
                 yield return new ValidationResult("The start of the range cannot be greater than the end of the range.");
             }
