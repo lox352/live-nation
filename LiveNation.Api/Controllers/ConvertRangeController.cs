@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LiveNation.Api.DTOs.Request;
 using LiveNation.Api.DTOs.Response;
+using LiveNation.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LiveNation.Api.Controllers
@@ -12,11 +13,19 @@ namespace LiveNation.Api.Controllers
     [ApiController]
     public class ConvertRangeController : ControllerBase
     {
+        private readonly IConvertRangeService _convertRangeService;
+
+        public ConvertRangeController(IConvertRangeService convertRangeService)
+        {
+            _convertRangeService = convertRangeService;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<ConvertedRange> Get(RangeRequest range)
         {
-            return new ConvertedRange();
+            var convertedRange = _convertRangeService.ConvertRange(range);
+            return convertedRange;
         }
 
         // GET api/values/5
