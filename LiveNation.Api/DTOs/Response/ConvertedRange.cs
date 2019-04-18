@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LiveNation.Api.DTOs.Response
 {
-    public class ConvertRangeResponse
+    public class ConvertedRange
     {
         public string Result { get; set; }
         public ResultSummary ResultSummary { get; set; }

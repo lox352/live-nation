@@ -33,10 +33,10 @@ namespace LiveNation.Api.Tests.Controllers
             Assert.Equal(expectedResult, deserialisedResponseContent.Result);
         }
 
-        private static async Task<ConvertRangeResponse> GetDeserialisedResponseContentAsync(HttpResponseMessage response)
+        private static async Task<ConvertedRange> GetDeserialisedResponseContentAsync(HttpResponseMessage response)
         {
             var responseContent = await response.Content.ReadAsStringAsync();
-            var deserialisedResponseContent = JsonConvert.DeserializeObject<ConvertRangeResponse>(responseContent);
+            var deserialisedResponseContent = JsonConvert.DeserializeObject<ConvertedRange>(responseContent);
             return deserialisedResponseContent;
         }
     }
