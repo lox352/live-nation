@@ -29,9 +29,28 @@ namespace LiveNation.Api.Tests.Controllers
             var response = await client.GetAsync(url);
 
             // Assert
-            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            response.EnsureSuccessStatusCode();
             var deserialisedResponseContent = await GetDeserialisedResponseContentAsync(response);
             Assert.Equal(expectedResult, deserialisedResponseContent.Result);
+        }
+
+        [Fact]
+        public async Task Get_EndpointsReturnSuccessAndCorrectSummary()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+            var url = "/ConvertRange?start=1&end=20";
+
+            // Act
+            var response = await client.GetAsync(url);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            var deserialisedResponseContent = await GetDeserialisedResponseContentAsync(response);
+            Assert.Equal(5, deserialisedResponseContent.ResultSummary["Live"]);
+            Assert.Equal(3, deserialisedResponseContent.ResultSummary["Nation"]);
+            Assert.Equal(1, deserialisedResponseContent.ResultSummary["LiveNation"]);
+            Assert.Equal(11, deserialisedResponseContent.ResultSummary["integer"]);
         }
 
         private static async Task<ConvertedRange> GetDeserialisedResponseContentAsync(HttpResponseMessage response)
