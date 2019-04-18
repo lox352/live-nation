@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LiveNation.Api.DTOs.Request;
+using LiveNation.Api.DTOs.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LiveNation.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("convertrange")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ConvertRangeController : ControllerBase
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<ConvertedRange> Get(RangeRequest range)
         {
-            return new string[] { "value1", "value2" };
+            return new ConvertedRange();
         }
 
         // GET api/values/5
