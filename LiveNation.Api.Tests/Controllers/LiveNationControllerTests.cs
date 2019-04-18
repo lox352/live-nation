@@ -18,7 +18,7 @@ namespace LiveNation.Api.Tests.Controllers
 
         [Theory]
         [InlineData(1,20, "1 2 Live 4 Nation Live 7 8 Live Nation 11 Live 13 14 LiveNation 16 17 Live 19 Nation")]
-        [InlineData(-5,0, "Nation -4 Live -2 -1 0")]
+        [InlineData(-5,0, "Nation -4 Live -2 -1 LiveNation")]
         public async Task Get_EndpointsReturnSuccessAndCorrectResult(int rangeStart, int rangeEnd, string expectedResult)
         {
             // Arrange
@@ -27,10 +27,11 @@ namespace LiveNation.Api.Tests.Controllers
 
             // Act
             var response = await client.GetAsync(url);
+            var deserialisedResponseContent = await GetDeserialisedResponseContentAsync(response);
 
             // Assert
             response.EnsureSuccessStatusCode();
-            var deserialisedResponseContent = await GetDeserialisedResponseContentAsync(response);
+
             Assert.Equal(expectedResult, deserialisedResponseContent.Result);
         }
 
@@ -43,14 +44,15 @@ namespace LiveNation.Api.Tests.Controllers
 
             // Act
             var response = await client.GetAsync(url);
+            var deserialisedResponseContent = await GetDeserialisedResponseContentAsync(response);
 
             // Assert
-            response.EnsureSuccessStatusCode(); // Status Code 200-299
-            var deserialisedResponseContent = await GetDeserialisedResponseContentAsync(response);
-            Assert.Equal(5, deserialisedResponseContent.ResultSummary["Live"]);
-            Assert.Equal(3, deserialisedResponseContent.ResultSummary["Nation"]);
-            Assert.Equal(1, deserialisedResponseContent.ResultSummary["LiveNation"]);
-            Assert.Equal(11, deserialisedResponseContent.ResultSummary["integer"]);
+            response.EnsureSuccessStatusCode();
+
+            Assert.Equal((long)5, deserialisedResponseContent.Summary["Live"]);
+            Assert.Equal((long)3, deserialisedResponseContent.Summary["Nation"]);
+            Assert.Equal((long)1, deserialisedResponseContent.Summary["LiveNation"]);
+            Assert.Equal((long)11, deserialisedResponseContent.Summary["integer"]);
         }
 
         private static async Task<ConvertedRange> GetDeserialisedResponseContentAsync(HttpResponseMessage response)
