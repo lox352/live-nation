@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LiveNation.Api.Helpers;
+using LiveNation.Api.Options;
 using LiveNation.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +28,11 @@ namespace LiveNation.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<List<ConversionRule>>(Configuration.GetSection("ConversionRules"));
+
             services.AddSingleton<IConvertRangeService, ConvertRangeService>();
+            services.AddSingleton<IRulesHelper, RulesHelper>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

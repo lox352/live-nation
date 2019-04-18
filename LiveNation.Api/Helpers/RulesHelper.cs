@@ -1,17 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using LiveNation.Api.Options;
+using Microsoft.Extensions.Options;
 
 namespace LiveNation.Api.Helpers
 {
     public interface IRulesHelper
     {
-        string ApplyRules(int integer, Dictionary<string, int> resultsSummary);
+        string ApplyRules(int integer);
     }
 
     public class RulesHelper : IRulesHelper
     {
-        public string ApplyRules(int integer, Dictionary<string, int> resultsSummary)
+        private readonly List<ConversionRule> _rules;
+
+        public RulesHelper(IOptionsMonitor<List<ConversionRule>> rulesAccessor)
         {
-            throw new System.NotImplementedException();
+            _rules = rulesAccessor.CurrentValue;
+        }
+
+        public string ApplyRules(int integer)
+        {
+            string result = null;
+
+            foreach (var rule in _rules)
+            {
+                var ruleShouldBeApplied = integer % rule.Divisor == 0;
+                if (ruleShouldBeApplied)
+                {
+                    result += rule.OutputText;
+                }
+            }
+
+            return result ?? integer.ToString();
         }
     }
 }

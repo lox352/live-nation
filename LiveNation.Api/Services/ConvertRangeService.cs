@@ -27,7 +27,7 @@ namespace LiveNation.Api.Services
             var countDictionary = new Dictionary<string, int>();
 
             var integers = Enumerable.Range(range.Start, range.Length);
-            var convertedRange = integers.Select(integer => _rulesHelper.ApplyRule(integer, countDictionary));
+            var convertedRange = integers.Select(integer => _rulesHelper.ApplyRules(integer));
 
             return new ConvertedRange()
             {

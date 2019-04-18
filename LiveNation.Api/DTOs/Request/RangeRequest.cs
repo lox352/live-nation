@@ -13,7 +13,7 @@ namespace LiveNation.Api.DTOs.Request
     {
         public int Start { get; set; }
         public int End { get; set; }
-        public int Length  => End - Start;
+        public int Length  => End - Start + 1;
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
