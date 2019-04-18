@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -13,7 +12,6 @@ namespace LiveNation.Api.DTOs.Request
     {
         public int Start { get; set; }
         public int End { get; set; }
-        public int Length  => End - Start + 1;
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

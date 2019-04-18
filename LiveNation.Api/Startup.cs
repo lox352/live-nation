@@ -30,8 +30,9 @@ namespace LiveNation.Api
         {
             services.Configure<List<ConversionRule>>(Configuration.GetSection("ConversionRules"));
 
-            services.AddSingleton<IConvertRangeService, ConvertRangeService>();
-            services.AddSingleton<IRulesHelper, RulesHelper>();
+            services.AddTransient<IConvertRangeService, ConvertRangeService>();
+            services.AddTransient<IRulesHelper, RulesHelper>();
+            services.AddTransient<IConvertedRangeBuilder, ConvertedRangeBuilder>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

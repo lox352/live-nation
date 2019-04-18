@@ -15,25 +15,21 @@ namespace LiveNation.Api.Services
 
     public class ConvertRangeService : IConvertRangeService
     {
-        private readonly IRulesHelper _rulesHelper;
+        private readonly IConvertedRangeBuilder _convertedRangeBuilder;
 
-        public ConvertRangeService(IRulesHelper rulesHelper)
+        public ConvertRangeService(IConvertedRangeBuilder convertedRangeBuilder)
         {
-            _rulesHelper = rulesHelper;
+            _convertedRangeBuilder = convertedRangeBuilder;
         }
 
         public ConvertedRange ConvertRange(RangeRequest range)
         {
-            var countDictionary = new Dictionary<string, int>();
-
-            var integers = Enumerable.Range(range.Start, range.Length);
-            var convertedRange = integers.Select(integer => _rulesHelper.ApplyRules(integer));
-
-            return new ConvertedRange()
+            for (var i = range.Start; i <= range.End; i++)
             {
-                Result = string.Join(' ', convertedRange),
-                ResultSummary = countDictionary
-            };
+                _convertedRangeBuilder.AddElement(i);
+            }
+
+            return _convertedRangeBuilder.Build();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace LiveNation.Api.Helpers
 {
     public interface IRulesHelper
     {
-        string ApplyRules(int integer);
+        bool TryApplyRules(int integer, out string convertedInteger);
     }
 
     public class RulesHelper : IRulesHelper
@@ -19,7 +19,7 @@ namespace LiveNation.Api.Helpers
             _rules = rulesAccessor.CurrentValue;
         }
 
-        public string ApplyRules(int integer)
+        public bool TryApplyRules(int integer, out string convertedInteger)
         {
             string result = null;
 
@@ -32,7 +32,9 @@ namespace LiveNation.Api.Helpers
                 }
             }
 
-            return result ?? integer.ToString();
+            convertedInteger = result ?? integer.ToString();
+            var rulesHaveBeenApplied = result != null;
+            return rulesHaveBeenApplied;
         }
     }
 }
