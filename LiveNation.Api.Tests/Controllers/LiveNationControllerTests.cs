@@ -18,7 +18,8 @@ namespace LiveNation.Api.Tests.Controllers
 
         [Theory]
         [InlineData(1,20, "1 2 Live 4 Nation Live 7 8 Live Nation 11 Live 13 14 LiveNation 16 17 Live 19 Nation")]
-        public async Task Get_EndpointsReturnSuccessAndCorrectContentType(int rangeStart, int rangeEnd, string expectedResult)
+        [InlineData(-5,0, "Nation -4 Live -2 -1 0")]
+        public async Task Get_EndpointsReturnSuccessAndCorrectResult(int rangeStart, int rangeEnd, string expectedResult)
         {
             // Arrange
             var client = _factory.CreateClient();
